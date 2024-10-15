@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Giải Mã Unicode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Công Cụ Giải Mã Unicode</h1>
+    <label for="unicode-input">Nhập chuỗi mã Unicode:</label>
+    <textarea id="unicode-input" placeholder="Nhập chuỗi Unicode escape sequences ví dụ: \u003c\u0064\u0069\u0076 hoặc \x3c\x73\x63\x72\x69\x70\x74..."></textarea>
+    <button id="decode-button">Giải Mã</button>
+    <div id="result-container" class="result" style="display:none;">
+        <h3>Kết Quả Giải Mã:</h3>
+        <pre id="result-output"></pre>
+    </div>
+</div>
+
+<script>
+    document.getElementById('decode-button').addEventListener('click', function() {
+        const input = document.getElementById('unicode-input').value;
+
+        // Giải mã Unicode escape dạng \u
+        let decodedString = input.replace(/\\u([\dA-Fa-f]{4})/g, function(match, group) {
+            return String.fromCharCode(parseInt(group, 16));
+        });
+
+        // Giải mã hex escape dạng \x
+        decodedString = decodedString.replace(/\\x([\dA-Fa-f]{2})/g, function(match, group) {
+            return String.fromCharCode(parseInt(group, 16));
+        });
+
+        // Hiển thị kết quả
+        const resultContainer = document.getElementById('result-container');
+        const resultOutput = document.getElementById('result-output');
+        resultOutput.textContent = decodedString;
+        resultContainer.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
