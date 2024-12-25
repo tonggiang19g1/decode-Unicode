@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Công Cụ Giải Mã Unicode</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             background-color: #f4f4f4;
+            margin: 0;
+            height: 100vh;
         }
 
         .container {
@@ -20,8 +30,8 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
+            max-width: 100%;
+            width: 90%;
         }
 
         h1 {
@@ -69,6 +79,24 @@
             white-space: pre-wrap;
             overflow-x: auto;
             max-height: 300px;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
         }
 
         pre {
@@ -86,6 +114,7 @@
     <textarea id="unicode-input" placeholder="Nhập chuỗi Unicode escape sequences ví dụ: \u003c\u0064\u0069\u0076 hoặc \x3c\x73\x63\x72\x69\x70\x74..."></textarea>
     <button id="decode-button">Giải Mã</button>
     <div id="result-container" class="result" style="display:none;">
+        <button class="copy-button" id="copy-button">Copy</button>
         <h3>Kết Quả Giải Mã:</h3>
         <pre id="result-output"></pre>
     </div>
@@ -110,6 +139,15 @@
         const resultOutput = document.getElementById('result-output');
         resultOutput.textContent = decodedString;
         resultContainer.style.display = 'block';
+    });
+
+    document.getElementById('copy-button').addEventListener('click', function() {
+        const resultOutput = document.getElementById('result-output');
+        navigator.clipboard.writeText(resultOutput.textContent).then(() => {
+            alert("Kết quả đã được sao chép!");
+        }).catch(err => {
+            alert("Không thể sao chép, hãy thử lại.");
+        });
     });
 </script>
 
